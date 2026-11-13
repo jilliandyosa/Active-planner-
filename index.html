@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ec4899" />
+
+    <title>Active Planner</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="script.js" defer></script>
+  </head>
+
+  <body>
+    <!-- WELCOME SCREEN -->
+    <section id="welcomeScreen" class="welcome-screen">
+      <div class="welcome-card">
+        <img
+          src="planner-logo.jpg.jpg"
+          alt="Active Planner Logo"
+          class="welcome-logo"
+        />
+
+        <p class="eyebrow">YOUR TIME, YOUR WAY</p>
+
+        <h1>
+          WELCOME TO<br />
+          <span>PLANNER ACTIVE </span>
+        </h1>
+
+        <p class="welcome-copy">
+          Organize your tasks, plan your days, and make every moment count.
+        </p>
+
+        <button id="startButton" class="primary-btn start-btn">
+          Start <span>→</span>
+        </button>
+
+        <p class="welcome-note">A little planning goes a long way ♡</p>
+      </div>
+
+      <div class="welcome-decoration decor-one"></div>
+      <div class="welcome-decoration decor-two"></div>
+    </section>
+
+    <!-- MAIN APPLICATION -->
+    <div id="app" class="app-shell hidden">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <a class="brand" href="#" data-view="dashboard">
+          <div class="brand-mark">A<span>+</span></div>
+
+          <div>
+            <strong>Active Planner</strong>
+            <small>Make today count</small>
+          </div>
+        </a>
+
+        <p class="nav-label">WORKSPACE</p>
+
+        <nav class="side-nav">
+          <button class="nav-item active" data-view="dashboard">
+            <span>⌂</span> Dashboard
+          </button>
+
+          <button class="nav-item" data-view="todo">
+            <span>✓</span> To-do
+          </button>
+
+          <button class="nav-item" data-view="schedule">
+            <span>◷</span> Schedule
+          </button>
+
+          <button class="nav-item" data-view="organizer">
+            <span>▦</span> Organizer
+          </button>
+
+          <button class="nav-item" data-view="reminders">
+            <span>♧</span> Reminders
+          </button>
+
+          <button class="nav-item" data-view="calendar">
+            <span>▣</span> Calendar
+          </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="mini-tip">
+            <span>✦</span>
+            <strong>Small steps matter.</strong>
+            <p>Keep showing up for your goals.</p>
+          </div>
+
+          <button class="nav-item" data-view="settings">
+            <span>⚙</span> Appearance
+          </button>
+        </div>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="main-area">
+        <!-- TOPBAR -->
+        <header class="topbar">
+          <div class="mobile-brand">
+            <img
+              src="planner-logo.jpg.jpg"
+              alt="Active Planner Logo"
+              class="mobile-logo"
+            />
+
+            <strong>PLANNER ACTIVE</strong>
+          </div>
+
+          <div class="topbar-date" id="todayLabel"></div>
+
+          <div class="topbar-actions">
+            <button
+              class="icon-btn"
+              data-view="reminders"
+              aria-label="Open reminders"
+            >
+              ♧
+            </button>
+          </div>
+        </header>
+
+        <!-- DASHBOARD -->
+        <section class="view active-view" id="view-dashboard">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">YOUR PERSONAL WORKSPACE</p>
+
+              <h1 id="greeting">Good day!</h1>
+
+              <p class="muted">Let's make today productive and meaningful.</p>
+            </div>
+
+            <button class="primary-btn" data-view="todo">＋ Add a task</button>
+          </div>
+
+          <!-- STATISTICS -->
+          <div class="stats-grid">
+            <article class="stat-card">
+              <div class="stat-icon pink-icon">✓</div>
+              <p>Total tasks</p>
+              <strong id="statTotal">0</strong>
+              <small>All your tasks</small>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-icon peach-icon">◷</div>
+              <p>To complete</p>
+              <strong id="statPending">0</strong>
+              <small>Keep moving forward</small>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-icon green-icon">★</div>
+              <p>Completed</p>
+              <strong id="statDone">0</strong>
+              <small>Look at your progress</small>
+            </article>
+
+            <article class="stat-card">
+              <div class="stat-icon purple-icon">🔔</div>
+              <p>Active reminders</p>
+              <strong id="statReminders">0</strong>
+              <small>Tasks with alerts</small>
+            </article>
+          </div>
+
+          <!-- DASHBOARD CONTENT -->
+          <div class="dashboard-grid">
+            <article class="panel task-panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>Today's tasks</h2>
+                  <p class="muted">
+                    A quick look at what needs your attention.
+                  </p>
+                </div>
+
+                <button class="text-btn" data-view="todo">View all →</button>
+              </div>
+
+              <div id="dashboardTasks" class="task-list"></div>
+            </article>
+
+            <article class="panel agenda-panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>Coming up</h2>
+                  <p class="muted">Your next scheduled activities.</p>
+                </div>
+
+                <button class="text-btn" data-view="schedule">
+                  See schedule →
+                </button>
+              </div>
+
+              <div id="dashboardAgenda" class="agenda-list"></div>
+            </article>
+          </div>
+
+          <!-- QUOTE -->
+          <article class="quote-banner">
+            <div>
+              <span>✦ A GENTLE REMINDER</span>
+
+              <h2>You don't have to do it all at once.</h2>
+
+              <p>Focus on one task, then celebrate the progress you make.</p>
+            </div>
+
+            <div class="quote-flower">💖</div>
+          </article>
+        </section>
+
+        <!-- TO-DO SECTION -->
+        <section class="view" id="view-todo">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">GET THINGS DONE</p>
+              <h1>My To-do List</h1>
+
+              <p class="muted">
+                Capture your tasks and check them off as you go.
+              </p>
+            </div>
+          </div>
+
+          <article class="panel">
+            <form id="taskForm" class="entry-form">
+              <div class="field grow">
+                <label for="taskTitle">Task name</label>
+
+                <input
+                  id="taskTitle"
+                  required
+                  maxlength="100"
+                  placeholder="What do you need to do?"
+                />
+              </div>
+
+              <div class="field">
+                <label for="taskDate">Due date</label>
+
+                <input id="taskDate" type="date" required />
+              </div>
+
+              <div class="field">
+                <label for="taskPriority">Priority</label>
+
+                <select id="taskPriority">
+                  <option>Medium</option>
+                  <option>High</option>
+                  <option>Low</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="taskAlert">Reminder alert</label>
+
+                <select id="taskAlert">
+                  <option value="no">Off</option>
+                  <option value="yes">On</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="taskAlertTime">Alert time</label>
+
+                <input id="taskAlertTime" type="time" value="09:00" />
+              </div>
+
+              <button class="primary-btn form-button" type="submit">
+                Add task
+              </button>
+            </form>
+
+            <div class="toolbar">
+              <div class="filter-group" id="taskFilters">
+                <button class="filter-btn selected" data-filter="all">
+                  All
+                </button>
+
+                <button class="filter-btn" data-filter="active">Active</button>
+
+                <button class="filter-btn" data-filter="completed">
+                  Completed
+                </button>
+              </div>
+
+              <span class="muted" id="taskCount">0 tasks</span>
+            </div>
+
+            <div id="todoList" class="task-list roomy-list"></div>
+          </article>
+        </section>
+
+        <!-- SCHEDULE SECTION -->
+        <section class="view" id="view-schedule">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">PLAN YOUR TIME</p>
+              <h1>Daily Schedule</h1>
+
+              <p class="muted">Give your day a clear and comfortable rhythm.</p>
+            </div>
+          </div>
+
+          <article class="panel">
+            <form id="scheduleForm" class="entry-form">
+              <div class="field grow">
+                <label for="scheduleTitle">Activity</label>
+
+                <input
+                  id="scheduleTitle"
+                  required
+                  maxlength="100"
+                  placeholder="e.g. Study programming"
+                />
+              </div>
+
+              <div class="field">
+                <label for="scheduleDate">Date</label>
+
+                <input id="scheduleDate" type="date" required />
+              </div>
+
+              <div class="field">
+                <label for="scheduleTime">Time</label>
+
+                <input id="scheduleTime" type="time" required />
+              </div>
+
+              <button class="primary-btn form-button" type="submit">
+                Add activity
+              </button>
+            </form>
+
+            <div class="section-subheading">
+              <h2>Daily agenda</h2>
+
+              <input
+                id="agendaDate"
+                type="date"
+                aria-label="Choose schedule date"
+              />
+            </div>
+
+            <div id="scheduleList" class="timeline"></div>
+          </article>
+        </section>
+
+        <!-- ORGANIZER SECTION -->
+        <section class="view" id="view-organizer">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">KEEP IT IN ORDER</p>
+              <h1>Task Organizer</h1>
+
+              <p class="muted">Group your tasks by priority and due date.</p>
+            </div>
+          </div>
+
+          <div class="organizer-grid">
+            <article class="panel">
+              <div class="panel-heading">
+                <h2>High priority</h2>
+                <span class="priority-dot high-dot"></span>
+              </div>
+
+              <div id="highTasks" class="task-list"></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-heading">
+                <h2>Medium priority</h2>
+                <span class="priority-dot medium-dot"></span>
+              </div>
+
+              <div id="mediumTasks" class="task-list"></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-heading">
+                <h2>Low priority</h2>
+                <span class="priority-dot low-dot"></span>
+              </div>
+
+              <div id="lowTasks" class="task-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <!-- REMINDERS SECTION -->
+        <section class="view" id="view-reminders">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">DON'T MISS A THING</p>
+              <h1>Reminders</h1>
+
+              <p class="muted">
+                Every task with an alert enabled appears here.
+              </p>
+            </div>
+          </div>
+
+          <article class="panel">
+            <div class="notice">
+              <span>♧</span>
+
+              <div>
+                <strong>Reminder settings</strong>
+
+                <p>
+                  Turn on an alert when adding or editing a task. Keep this page
+                  open to receive in-app alerts while the app is running.
+                </p>
+              </div>
+            </div>
+
+            <div id="reminderList" class="task-list roomy-list"></div>
+          </article>
+        </section>
+
+        <!-- CALENDAR SECTION -->
+        <section class="view" id="view-calendar">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">SEE THE BIG PICTURE</p>
+              <h1>Calendar</h1>
+
+              <p class="muted">Your tasks and schedule, all in one place.</p>
+            </div>
+
+            <button class="soft-btn" id="todayButton">Today</button>
+          </div>
+
+          <article class="panel calendar-panel">
+            <div class="calendar-header">
+              <button class="icon-btn" id="prevMonth">‹</button>
+
+              <h2 id="monthLabel"></h2>
+
+              <button class="icon-btn" id="nextMonth">›</button>
+            </div>
+
+            <div class="calendar-grid weekday-row">
+              <span>Sun</span>
+              <span>Mon</span>
+              <span>Tue</span>
+              <span>Wed</span>
+              <span>Thu</span>
+              <span>Fri</span>
+              <span>Sat</span>
+            </div>
+
+            <div id="calendarDays" class="calendar-grid calendar-days"></div>
+
+            <div class="calendar-legend">
+              <span>
+                <i class="legend-dot task-legend"></i>
+                Tasks
+              </span>
+
+              <span>
+                <i class="legend-dot schedule-legend"></i>
+                Schedule
+              </span>
+            </div>
+
+            <div class="selected-day-panel">
+              <h3 id="selectedDateLabel">Select a date</h3>
+
+              <div id="selectedDateItems" class="task-list"></div>
+            </div>
+          </article>
+        </section>
+
+        <!-- APPEARANCE SETTINGS -->
+        <section class="view" id="view-settings">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">MAKE IT YOURS</p>
+              <h1>Appearance</h1>
+
+              <p class="muted">
+                Choose the colors and font that feel right for you.
+              </p>
+            </div>
+          </div>
+
+          <article class="panel settings-panel">
+            <div class="setting-block">
+              <h2>Choose a theme color</h2>
+
+              <p class="muted">
+                Your selected color will update buttons and highlights.
+              </p>
+
+              <div class="swatches">
+                <button
+                  class="swatch"
+                  data-color="#ec4899"
+                  style="--swatch: #ec4899"
+                  aria-label="Pink"
+                ></button>
+
+                <button
+                  class="swatch"
+                  data-color="#8b5cf6"
+                  style="--swatch: #8b5cf6"
+                  aria-label="Purple"
+                ></button>
+
+                <button
+                  class="swatch"
+                  data-color="#3b82f6"
+                  style="--swatch: #3b82f6"
+                  aria-label="Blue"
+                ></button>
+
+                <button
+                  class="swatch"
+                  data-color="#14b8a6"
+                  style="--swatch: #14b8a6"
+                  aria-label="Teal"
+                ></button>
+
+                <button
+                  class="swatch"
+                  data-color="#f97316"
+                  style="--swatch: #f97316"
+                  aria-label="Orange"
+                ></button>
+
+                <button
+                  class="swatch"
+                  data-color="#64748b"
+                  style="--swatch: #64748b"
+                  aria-label="Slate"
+                ></button>
+              </div>
+            </div>
+
+            <div class="setting-block">
+              <h2>Choose your font</h2>
+
+              <p class="muted">Change the typography across the whole app.</p>
+
+              <div class="field font-field">
+                <label for="fontSelect">Font style</label>
+
+                <select id="fontSelect">
+                  <option value="'DM Sans', sans-serif">DM Sans</option>
+
+                  <option value="'Poppins', sans-serif">Poppins</option>
+
+                  <option value="'Nunito', sans-serif">Nunito</option>
+
+                  <option value="'Quicksand', sans-serif">Quicksand</option>
+
+                  <option value="Arial, sans-serif">Arial</option>
+
+                  <option value="Georgia, serif">Georgia</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="setting-block">
+              <h2>Preview</h2>
+
+              <div class="preview-card">
+                <strong>Make today count ✨</strong>
+
+                <p>
+                  This is how your planner will look with your chosen style.
+                </p>
+
+                <button class="primary-btn" type="button">Sample button</button>
+              </div>
+            </div>
+
+            <button id="resetAppearance" class="soft-btn">
+              Reset appearance
+            </button>
+          </article>
+        </section>
+      </main>
+
+      <!-- MOBILE BOTTOM NAVIGATION -->
+      <nav class="mobile-nav">
+        <button class="mobile-nav-item active" data-view="todo">
+          <span>✓</span>
+          <small>To-do</small>
+        </button>
+
+        <button class="mobile-nav-item" data-view="schedule">
+          <span>◷</span>
+          <small>Schedule</small>
+        </button>
+
+        <button class="mobile-nav-item" data-view="organizer">
+          <span>▦</span>
+          <small>Organizer</small>
+        </button>
+
+        <button class="mobile-nav-item" data-view="reminders">
+          <span>♧</span>
+          <small>Reminders</small>
+        </button>
+
+        <button class="mobile-nav-item" data-view="calendar">
+          <span>▣</span>
+          <small>Calendar</small>
+        </button>
+      </nav>
+    </div>
+    <!-- END OF MAIN APPLICATION -->
+
+    <!-- TOAST MESSAGE -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <!-- REMINDER ALERT MODAL -->
+    <div id="alertModal" class="modal hidden">
+      <div class="modal-card">
+        <div class="modal-icon">♧</div>
+
+        <p class="eyebrow">ACTIVE PLANNER REMINDER</p>
+
+        <h2 id="alertTitle">Reminder</h2>
+
+        <p id="alertMessage"></p>
+
+        <button id="dismissAlert" class="primary-btn">Got it</button>
+      </div>
+    </div>
+  </body>
+</html>
